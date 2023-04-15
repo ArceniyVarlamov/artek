@@ -1,0 +1,317 @@
+$glass: rgba(0, 0, 0, 0.2);
+$glass-icon: rgba(0, 0, 0, 0.3);
+$option: rgba(0, 0, 0, 0.7);
+$white-color: white;
+$help-color: rgba(240, 248, 255, 0.9);
+
+* {
+	margin: 0;
+}
+
+select {
+	appearance: none;
+	border: 0;
+	outline: 0;
+	font: inherit;
+	padding: 0 4em 0 1em;
+	background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg)
+			no-repeat right 0.8em center / 1.4em,
+		$glass-icon;
+	background-color: $option;
+	color: white;
+	border-radius: 0.25em;
+	cursor: pointer;
+	option {
+		color: inherit;
+		background-color: $glass-icon;
+	}
+	&:focus {
+		outline: none;
+	}
+	&::-ms-expand {
+		display: none;
+	}
+}
+
+.roles {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	&__title {
+		font-size: 24px;
+		font-weight: 700;
+		margin: 40px 0;
+	}
+	&__main {
+		width: 80%;
+		gap: 10px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	&__input {
+		color: $glass-icon;
+		font-size: 16px;
+		font-weight: 600;
+		border: none;
+		
+		background-color: $glass;
+		padding: 0 10px;
+		min-width: 230px;
+		height: 40px;
+		&:focus-visible {
+			outline: none;
+		}
+		& * {
+			color: $glass-icon;
+		}
+	}
+	&__select {
+		min-width: 230px;
+		height: 40px;
+	}
+	&__add {
+		height: 40px;
+		width: 40px;
+
+		& img {
+			cursor: pointer;
+			height: 100%;
+			width: 100%;
+			object-fit: fill;
+		}
+	}
+	&__users {
+		margin-top: 20px;
+		width: 80%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	}
+	&__user {
+		height: 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 5px 10px;
+		gap: 20px;
+		font-weight: 700;
+		font-size: 20px;
+		border: 1px solid $glass-icon;
+	}
+	&__back {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		& img {
+			width: 100%;
+			height: 100%;
+			object-fit: fill;
+		}
+	}
+	&__error {
+		position: fixed;
+		bottom: 20px;
+		left: 20px;
+		width: 40%;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 2px solid rgba(255, 0, 0, 0.7);
+		font-size: 18px;
+		font-weight: 800;
+		color: rgba(255, 0, 0, 0.7);
+	}
+	&__start {
+		text-decoration: none;
+		border: 1px solid $option;
+		padding: 10px 35px;
+		font-size: 24px;
+		position: fixed;
+		color: $option;
+		bottom: 20px;
+		right: 20px;
+		font-weight: 700;
+		user-select: none;
+		cursor: pointer;
+	}
+}
+
+.question {
+	overflow: hidden;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
+	bottom: 20px;
+	left: 50%;
+	width: 100%;
+	transform: translate(-50%);
+	&__text {
+		text-align: center;
+		padding: 10px;
+		background-color: $glass-icon;
+		color: $white-color;
+		font-size: 20px;
+		width: 90%;
+		font-weight: 700;
+		word-break: keep-all;
+	}
+	&__choose {
+    font-size: 25px;
+    font-weight: 600;
+		width: 90%;
+		display: flex;
+		flex-wrap: wrap;
+		text-align: center;
+		justify-content: space-evenly;
+		& * {
+			cursor: pointer;
+			width: 34%;
+			margin: 10px;
+      padding: 0 5px;
+			background-color: $help-color;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+	&__select {
+    font-size: 20px;
+    font-weight: 600;
+		min-width: 30%;
+		height: 40px;
+	}
+	&__answer {
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+    font-size: 20px;
+    font-weight: 600;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 30%;
+		height: 40px;
+    color: $help-color;
+		background-color: rgba($glass-icon, 0.8);
+		border: 1px solid $option;
+	}
+  &__input {
+    width: 80%;
+		font-size: 16px;
+		font-weight: 600;
+		border: none;
+    word-break: keep-all;
+    padding: 10px;
+    resize: none;
+		&:focus-visible {
+			outline: none;
+		}
+  }
+}
+
+.resources {
+  background-color: $glass-icon;
+  color: $help-color;
+  position: absolute;
+  user-select: none;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 5px;
+  & img {
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  & > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+.start {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	&__form {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 90%;
+		gap: 10px;
+	}
+	&__title {
+		text-align: center;
+		font-size: 24px;
+		font-weight: 600;
+	}
+	&__subtitle {
+		text-align: center;
+		font-size: 18px;
+		font-weight: 600;
+	}
+	&__input1, &__input2 {
+		width: 70%;
+	}
+	&__select {
+		width: 70%;
+	}
+	&__next {
+		background-color: $option;
+		border-radius: 5px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: $help-color;
+		font-size: 24px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+	& * {
+		padding: 5px 10px;
+	}
+}
+
+html,
+body,
+#root {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+#zappar-button {
+	opacity: 0;
+	position: absolute;
+	bottom: 30px;
+	width: 200px;
+	left: calc(50% - 100px);
+	z-index: 1000;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	text-align: center;
+	font-family: sans-serif;
+	padding: 10px;
+	border-radius: 5px;
+	position: "absolute";
+}
