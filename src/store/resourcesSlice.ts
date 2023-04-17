@@ -45,6 +45,12 @@ const resourcesSlice = createSlice({
 					? 1
 					: Math.floor(state.overall - action.payload);
 		},
+		againResourses(state) {
+			state.water = 100
+			state.air = 100
+			state.food = 100
+			state.overall = 100
+		}
 	},
 });
 
@@ -57,6 +63,7 @@ export const {
 	removeFood,
 	addOverall,
 	removeOverall,
+	againResourses,
 } = resourcesSlice.actions;
 
 export default resourcesSlice.reducer;

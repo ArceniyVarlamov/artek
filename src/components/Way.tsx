@@ -30,55 +30,32 @@ import { addOverall, removeOverall } from "../store/resourcesSlice";
 let action: THREE.AnimationAction;
 
 let col = 0;
-const Model = ({num}: {num: number}) => {
+const Model = ({ num }: { num: number }) => {
 	const clock = new THREE.Clock();
 	const gltfs = [
 		useLoader(GLTFLoader, glb) as any,
+		useLoader(GLTFLoader, glb) as any,
+		useLoader(GLTFLoader, glb) as any,
 	];
-	const gltf = gltfs[num]
-	const mixer = new THREE.AnimationMixer(gltf.scene);
-
-	action = mixer.clipAction(gltf.animations[0]);
-	action.play()
+	const gltf = gltfs[num];
+	const mixer = new THREE.AnimationMixer(gltf?.scene);
 
 	if (col === 0) {
-		gltf.scene.rotateX(Math.PI / 2);
+		gltf?.scene.rotateX(Math.PI / 2);
 		++col;
 	}
 
 	useFrame(() => mixer.update(clock.getDelta()));
 
-	return <primitive object={gltf.scene} />;
+	return <primitive object={gltf?.scene} />;
 };
 
 export default function Way() {
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 	const [question, setQuestion] = useState(0);
 	const { roles } = useRolesInfo();
 	const { water, air, food, overall } = useResourcesInfo();
-	// const { users } = useUsersInfo();
-	const users = [
-    {
-        "name": "Арсений",
-        "role": "Капитан"
-    },
-    {
-        "name": "Катя",
-        "role": "Медик"
-    },
-    {
-        "name": "Глеб",
-        "role": "Импостер"
-    },
-    {
-        "name": "Любовь",
-        "role": "Штурман"
-    },
-    {
-        "name": "Даниил",
-        "role": "Программист"
-    }
-] as IUserCard[]
+	const { users } = useUsersInfo();
 
 	const dispatch = useDispatch();
 
@@ -89,17 +66,17 @@ export default function Way() {
 			//! Тип вопроса
 			type: "choose",
 			//! Текс вопроса
-			text: "!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!asf",
+			text: "На что похож кустарник?",
 			//! Вариант ответа
-			first: "первый вариант",
+			first: "Куб",
 			//! Вариант ответа
-			second: "второй вариант",
+			second: "Голова крипера",
 			//! Вариант ответа
-			third: "третий вариант",
+			third: "Параллелепипед",
 			//! Вариант ответа
-			fourth: "четвёртый вариант",
+			fourth: "Конус",
 			//! Ответ на вопрос
-			answer: 2,
+			answer: 1,
 			//! Если ответ правильный для кого начислиться больше очков
 			goodFor: [1, 2],
 			//! Если ответ верный во сколько увеличатся очки
@@ -115,8 +92,18 @@ export default function Way() {
 		},
 		{
 			type: "input",
-			text: "!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!asf",
-			answer: "Так правильно",
+			text: "Как звали эту девочку?",
+			answer: "Саманта Смит",
+			goodFor: [3, 4],
+			howGood: 1,
+			badFor: [5, 7],
+			howBad: 1,
+			overall: 1,
+		},
+		{
+			type: "input",
+			text: "Напишите что вам понравилось",
+			answer: "Ничего",
 			goodFor: [3, 4],
 			howGood: 1,
 			badFor: [5, 7],
@@ -134,7 +121,7 @@ export default function Way() {
 	useEffect(() => {
 		//! поменять немного на проверку на length
 		console.log(question, questions.length);
-		
+
 		if (question === questions.length) {
 			return navigate("/end");
 		}
@@ -142,7 +129,6 @@ export default function Way() {
 
 	const visible = () => {
 		setShow(true);
-		action.play();
 	};
 
 	const inVisible = () => {
@@ -150,42 +136,50 @@ export default function Way() {
 	};
 	const answer = (flag: boolean) => {
 		if (flag) {
-			console.log('rqwrqwrqwrqwrqwrqwrqwrqwr');
-			
 			const options = roles.find(
 				(item) =>
 					item.name ===
-					document.querySelector<HTMLSelectElement>(".question__select")?.value.split('|')[0],
+					document
+						.querySelector<HTMLSelectElement>(".question__select")
+						?.value.split("|")[0],
 			);
 			console.log(options);
-			
+
 			if (questions[question].goodFor.includes(options?.id!)) {
-				dispatch(addOverall((questions[question].howGood || 1) + (questions[question].overall || 1)))
+				dispatch(
+					addOverall(
+						(questions[question].howGood || 1) +
+							(questions[question].overall || 1),
+					),
+				);
 			} else {
-				dispatch(addOverall(questions[question].overall || 1))
+				dispatch(addOverall(questions[question].overall || 1));
 			}
 		} else {
 			const options = roles.find(
 				(item) =>
 					item.name ===
-					document.querySelector<HTMLSelectElement>(".question__select")?.value.split('|')[0],
+					document
+						.querySelector<HTMLSelectElement>(".question__select")
+						?.value.split("|")[0],
 			);
 			console.log(options);
 			if (questions[question].badFor.includes(options?.id!)) {
-				dispatch(removeOverall((questions[question].howBad || 1) + (questions[question].overall || 1)))
+				dispatch(
+					removeOverall(
+						(questions[question].howBad || 1) +
+							(questions[question].overall || 1),
+					),
+				);
 			} else {
-				dispatch(removeOverall(questions[question].overall || 1))
+				dispatch(removeOverall(questions[question].overall || 1));
 			}
 		}
 		setQuestion(question + 1);
-		
+		setShow(false);
 	};
 
-	const targetImages = [
-		cust,
-		smit,
-		sturval
-	]
+	const targetImages = [cust, smit, sturval];
 
 	return (
 		<>
@@ -242,7 +236,11 @@ export default function Way() {
 						</div>
 						<select className='question__select'>
 							{users.map((item, i) => {
-								return <option key={i}>{item.role}|{item.name}</option>;
+								return (
+									<option key={i}>
+										{item.role}|{item.name}
+									</option>
+								);
 							})}
 						</select>
 					</div>
@@ -254,16 +252,22 @@ export default function Way() {
 							placeholder='Введите ответ сюда'
 						/>
 						<select className='question__select'>
-							{roles.map((item, i) => {
-								return <option key={`${item.id}`}>{item.name}</option>;
+							{users.map((item, i) => {
+								return (
+									<option key={i}>
+										{item.role}|{item.name}
+									</option>
+								);
 							})}
 						</select>
 						<div
 							className='question__answer'
 							onClick={() =>
 								answer(
-									document.querySelector<HTMLTextAreaElement>(".question__input")?.value ===
-										questions[question].answer,
+									document
+										.querySelector<HTMLTextAreaElement>(".question__input")
+										?.value.toLowerCase() ===
+										(questions[question]?.answer + "").toLowerCase(),
 								)
 							}
 						>
