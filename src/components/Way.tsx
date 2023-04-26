@@ -10,7 +10,7 @@ import {
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-import glb from "../assets/waving.glb";
+import glb from "../assets/абсолют.glb";
 import cust from "../assets/cust.zpt";
 import smit from "../assets/smit.zpt";
 import sturval from "../assets/sturval.zpt";
