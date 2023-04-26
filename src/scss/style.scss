@@ -204,9 +204,11 @@ select {
     color: $help-color;
 		background-color: rgba($glass-icon, 0.8);
 		border: 1px solid $option;
+		margin-bottom: 20px;
 	}
   &__input {
     width: 80%;
+		margin-bottom: 20px;
 		font-size: 16px;
 		font-weight: 600;
 		border: none;
